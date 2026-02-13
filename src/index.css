@@ -434,38 +434,6 @@ body {
   will-change: transform;
 }
 
-/* Automatic Responsive Scaling for Machine */
-@media (max-width: 1024px) {
-  .machine-container {
-    transform: scale(0.9);
-  }
-}
-
-@media (max-width: 768px) {
-  .machine-container {
-    transform: scale(0.8);
-  }
-}
-
-@media (max-width: 480px) {
-  .machine-container {
-    transform: scale(0.7);
-  }
-}
-
-@media (max-width: 380px) {
-  .machine-container {
-    transform: scale(0.62);
-  }
-}
-
-@media (max-height: 700px) {
-  .machine-container {
-    transform: scale(0.6);
-  }
-}
-
-/* Manual Scale Overrides (Removing old ones) */
 
 .machine-shake {
   animation: machineVibrate 0.15s infinite;
@@ -1942,12 +1910,16 @@ body {
     width: 85%;
     max-width: 440px;
   }
+
+  .machine-container {
+    transform: scale(0.9);
+  }
 }
 
 /* --- MOBILE & TABLET (SM-MD) --- */
 @media (max-width: 768px) {
   .machine-container {
-    transform: scale(0.8);
+    transform: scale(0.85);
   }
 
   .envelope-wrapper {
@@ -2000,12 +1972,23 @@ body {
   .polaroid img {
     height: 220px;
   }
+
+  .love-coin {
+    width: 95px;
+    height: 95px;
+    bottom: 110px;
+    right: 25px;
+  }
+
+  .coin-label {
+    font-size: 9px;
+  }
 }
 
 /* --- SMALL MOBILE (SM) --- */
 @media (max-width: 480px) {
   .machine-container {
-    transform: scale(0.7);
+    transform: scale(0.7) translateY(-35px);
   }
 
   .envelope-wrapper {
@@ -2023,7 +2006,7 @@ body {
 
   .inventory-bar {
     transform: translateX(-50%) scale(0.8);
-    bottom: 8px;
+    bottom: 10px;
     padding: 6px 12px;
   }
 
@@ -2039,6 +2022,17 @@ body {
   .machine-topper {
     font-size: 1.1rem;
     padding: 8px 25px;
+  }
+
+  .love-coin {
+    width: 80px;
+    height: 80px;
+    bottom: 100px;
+    right: 20px;
+  }
+
+  .valentine-game .scene {
+    padding: 10px;
   }
 }
 
