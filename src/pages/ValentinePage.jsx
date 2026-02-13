@@ -20,7 +20,8 @@ function ValentinePage() {
     const [currentScene, setCurrentScene] = useState('splash');
     const [modalActive, setModalActive] = useState(false);
     const [currentPrize, setCurrentPrize] = useState(null);
-    const { playSound, fadeOut, fadeIn, registerAudio } = useAudio();
+    const [collectedIds, setCollectedIds] = useState([]);
+    const { playSound, stopSound, fadeOut, fadeIn, registerAudio } = useAudio();
 
     // Load external config if code is provided
     useEffect(() => {
@@ -57,6 +58,21 @@ function ValentinePage() {
         }
     }, [config]);
 
+    // Unified BGM Control - Absolute Fix for Outro Scene
+    useEffect(() => {
+        if (currentScene === 'outro') {
+            // 1. Start fading out immediately
+            fadeOut('mainBGM');
+
+            // 2. Also schedule a hard stop to be 100% sure
+            const timer = setTimeout(() => {
+                stopSound('mainBGM');
+            }, 1000); // Wait for fade to mostly finish
+
+            return () => clearTimeout(timer);
+        }
+    }, [currentScene, fadeOut, stopSound]);
+
     const enterEnvelopeScene = () => setCurrentScene('intro');
     const enterGameScene = () => {
         fireConfetti();
@@ -64,15 +80,7 @@ function ValentinePage() {
         setTimeout(() => setCurrentScene('game'), 1000);
     };
     const startOutro = () => {
-        // Immediate cleanup of main BGM to prevent overlap
-        const mainBgm = document.getElementById('mainBGM');
-        if (mainBgm) {
-            fadeOut('mainBGM', () => {
-                // Ensure it's fully stopped
-                mainBgm.pause();
-                mainBgm.currentTime = 0;
-            });
-        }
+        if (currentScene === 'outro') return; // Prevent double trigger
 
         setTimeout(() => {
             setCurrentScene('outro');
@@ -83,11 +91,15 @@ function ValentinePage() {
     const showPrizeModal = (prize) => {
         setCurrentPrize(prize);
         setModalActive(true);
+        if (prize && !collectedIds.includes(prize.id)) {
+            setCollectedIds(prev => [...prev, prize.id]);
+        }
     };
     const closeModal = () => {
         setModalActive(false);
-        const allCollected = document.querySelectorAll('.inv-slot.filled').length === 5;
-        if (allCollected) startOutro();
+        if (config?.memories && collectedIds.length >= config.memories.length) {
+            startOutro();
+        }
     };
 
     if (loading) return <div className="min-h-screen flex items-center justify-center text-white">Loading Memory Capsule...</div>;
@@ -111,7 +123,14 @@ function ValentinePage() {
 
             {currentScene === 'splash' && <SplashScene onStart={enterEnvelopeScene} playSound={playSound} config={config} />}
             <IntroScene isActive={currentScene === 'intro'} onEnterGame={enterGameScene} playSound={playSound} config={config} />
-            <GameScene isActive={currentScene === 'game'} onComplete={startOutro} playSound={playSound} showModal={showPrizeModal} config={config} />
+            <GameScene
+                isActive={currentScene === 'game'}
+                onComplete={startOutro}
+                playSound={playSound}
+                showModal={showPrizeModal}
+                config={config}
+                collectedIds={collectedIds}
+            />
             <OutroScene isActive={currentScene === 'outro'} playSound={playSound} config={config} />
             <Modal isActive={modalActive} prize={currentPrize} onClose={closeModal} config={config} />
         </div>

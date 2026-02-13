@@ -3,8 +3,8 @@ import { Heart, CreditCard } from 'lucide-react';
 
 import { fireHeartConfetti } from '../utils/animations';
 
-export const GameScene = ({ isActive, onComplete, playSound, showModal, config }) => {
-    const [collected, setCollected] = useState([]);
+export const GameScene = ({ isActive, onComplete, playSound, showModal, config, collectedIds }) => {
+    const collected = collectedIds || [];
     const [isSpinning, setIsSpinning] = useState(false);
     const [hasCredit, setHasCredit] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
@@ -255,7 +255,6 @@ export const GameScene = ({ isActive, onComplete, playSound, showModal, config }
             showModal(droppedCapsule);
 
             if (!collected.includes(droppedCapsule.id)) {
-                setCollected([...collected, droppedCapsule.id]);
                 playSound('sfxSuccess');
                 fireHeartConfetti();
             }

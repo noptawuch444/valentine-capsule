@@ -12,19 +12,33 @@ export const useAudio = () => {
         }
     }, []);
 
+    const stopSound = useCallback((id) => {
+        const audio = audioRefs.current[id];
+        if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+    }, []);
+
     const fadeOut = useCallback((id, callback) => {
         const audio = audioRefs.current[id];
-        if (!audio) return;
+        if (!audio || audio.paused) {
+            if (callback) callback();
+            return;
+        }
 
+        // Faster fade: 1 second total (10 steps of 100ms)
+        const step = audio.volume / 10;
         const fadeInterval = setInterval(() => {
-            if (audio.volume > 0.05) {
-                audio.volume -= 0.05;
+            if (audio.volume > step) {
+                audio.volume -= step;
             } else {
                 audio.pause();
+                audio.volume = 0;
                 clearInterval(fadeInterval);
                 if (callback) callback();
             }
-        }, 200);
+        }, 100);
     }, []);
 
     const fadeIn = useCallback((id, targetVolume = 0.5) => {
@@ -49,5 +63,5 @@ export const useAudio = () => {
         }
     }, []);
 
-    return { playSound, fadeOut, fadeIn, registerAudio };
+    return { playSound, stopSound, fadeOut, fadeIn, registerAudio };
 };
