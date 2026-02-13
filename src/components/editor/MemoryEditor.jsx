@@ -21,11 +21,11 @@ export const MemoryEditor = ({ memories, onChange }) => {
         <div className="memory-editor">
             <div className="memory-selector">
                 <div className="text-[10px] uppercase tracking-[0.2em] font-black text-gray-400 mb-4 ml-2">Select Slot</div>
-                <div className="grid grid-cols-2 md:grid-cols-1 gap-2">
+                <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0 scrollbar-hide">
                     {memories.map((memory, index) => (
                         <button
                             key={memory.id}
-                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all border-2 text-left group ${selectedIndex === index ? 'bg-[#334155] shadow-2xl border-white/20 -translate-y-1' : 'bg-[#1e293b]/40 border-transparent hover:bg-[#1e293b]/60'}`}
+                            className={`memory-selector-btn flex-shrink-0 flex items-center gap-3 p-3 rounded-2xl transition-all border-2 text-left group ${selectedIndex === index ? 'bg-[#334155] shadow-2xl border-white/20 -translate-y-1' : 'bg-[#1e293b]/40 border-transparent hover:bg-[#1e293b]/60'}`}
                             onClick={() => setSelectedIndex(index)}
                         >
                             <div

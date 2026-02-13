@@ -95,10 +95,11 @@ body {
   transition: opacity 1s ease-in-out, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 5;
   overflow: hidden;
+  padding: 20px;
 }
 
 .scene.hidden {
-  display: none;
+  display: none !important;
   opacity: 0;
   pointer-events: none;
   transform: scale(0.95);
@@ -425,7 +426,7 @@ body {
   perspective: 1200px;
   z-index: 10;
   filter: drop-shadow(0 30px 50px rgba(164, 19, 60, 0.23));
-  transition: transform 0.1s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -433,27 +434,38 @@ body {
   will-change: transform;
 }
 
-@media (max-width: 640px) {
+/* Automatic Responsive Scaling for Machine */
+@media (max-width: 1024px) {
+  .machine-container {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 768px) {
   .machine-container {
     transform: scale(0.8);
-    width: 100%;
-    max-width: 440px;
-    margin: 0 auto;
-    transform-origin: center top;
   }
 }
 
 @media (max-width: 480px) {
   .machine-container {
-    transform: scale(0.72);
+    transform: scale(0.7);
   }
 }
 
 @media (max-width: 380px) {
   .machine-container {
-    transform: scale(0.65);
+    transform: scale(0.62);
   }
 }
+
+@media (max-height: 700px) {
+  .machine-container {
+    transform: scale(0.6);
+  }
+}
+
+/* Manual Scale Overrides (Removing old ones) */
 
 .machine-shake {
   animation: machineVibrate 0.15s infinite;
@@ -1356,39 +1368,7 @@ body {
   }
 }
 
-/* Responsive */
-@media (max-width: 640px) {
-  .machine-container {
-    transform: scale(0.8);
-  }
-
-  .envelope-wrapper {
-    transform: scale(0.85);
-  }
-
-  .envelope-wrapper.open {
-    transform: scale(0.75) translateY(140px);
-  }
-
-  .envelope-wrapper.open .letter-card {
-    height: 340px;
-    transform: translateX(-50%) translateY(-90px);
-    padding: 20px 15px;
-  }
-
-  .final-title {
-    font-size: 2.5rem;
-  }
-
-  .inventory-bar {
-    padding: 12px 20px;
-  }
-
-  .inv-slot {
-    width: 45px;
-    height: 45px;
-  }
-}
+/* Responsive styling moved to unified section at bottom */
 
 /* Tailwind-like utilities */
 .flex {
@@ -1798,8 +1778,20 @@ body {
   line-height: 1.25;
 }
 
-.text-white\/90 {
-  color: rgba(255, 255, 255, 0.9);
+@media (max-width: 768px) {
+  .text-5xl {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-5xl {
+    font-size: 2.2rem;
+  }
+
+  .text-xl {
+    font-size: 1.1rem;
+  }
 }
 
 .mb-10 {
@@ -1935,34 +1927,139 @@ body {
   }
 }
 
-/* Luxury Responsive Styling */
+/* =======================================================
+   UNIFIED RESPONSIVE DESIGN SYSTEM
+   Supports: Mobile, Tablet, Desktop
+   ======================================================= */
+
+/* --- TABLET & SMALL DESKTOP (MD-LG) --- */
+@media (max-width: 1024px) {
+  .final-title {
+    font-size: 3.5rem;
+  }
+
+  .prize-card {
+    width: 85%;
+    max-width: 440px;
+  }
+}
+
+/* --- MOBILE & TABLET (SM-MD) --- */
 @media (max-width: 768px) {
+  .machine-container {
+    transform: scale(0.8);
+  }
+
   .envelope-wrapper {
     transform: scale(0.8);
     will-change: transform;
   }
 
+  .envelope {
+    width: 300px;
+    height: 210px;
+  }
+
+  .flap {
+    height: 105px;
+  }
+
+  .envelope-wrapper.open .letter-card {
+    width: 95%;
+    height: 320px;
+    transform: translateX(-50%) translateY(-80px);
+    font-size: 0.9rem;
+    padding: 20px 15px;
+  }
+
   .inventory-bar {
-    padding: 10px 20px;
-    gap: 10px;
+    padding: 8px 16px;
+    gap: 8px;
     bottom: 15px;
     transform: translateX(-50%) scale(0.9);
     will-change: transform;
+    width: auto;
+    max-width: 95vw;
   }
 
   .inv-slot {
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .final-title {
+    font-size: 2.8rem;
+    padding: 0 15px;
+  }
+
+  .prize-card {
+    padding: 25px;
+    width: 90%;
+  }
+
+  .polaroid img {
+    height: 220px;
   }
 }
 
+/* --- SMALL MOBILE (SM) --- */
 @media (max-width: 480px) {
+  .machine-container {
+    transform: scale(0.7);
+  }
+
+  .envelope-wrapper {
+    transform: scale(0.75);
+  }
+
+  .envelope-wrapper.open {
+    transform: scale(0.8) translateY(120px);
+  }
+
+  .envelope-wrapper.open .letter-card {
+    height: 280px;
+    transform: translateX(-50%) translateY(-60px);
+  }
+
   .inventory-bar {
     transform: translateX(-50%) scale(0.8);
-    bottom: 10px;
+    bottom: 8px;
+    padding: 6px 12px;
+  }
+
+  .inv-slot {
+    width: 38px;
+    height: 38px;
   }
 
   .final-title {
     font-size: 2.2rem;
+  }
+
+  .machine-topper {
+    font-size: 1.1rem;
+    padding: 8px 25px;
+  }
+}
+
+/* --- SUPER SMALL MOBILE (XS) --- */
+@media (max-width: 380px) {
+  .machine-container {
+    transform: scale(0.6);
+  }
+
+  .final-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* --- SHORT SCREENS (Landscape/Small height) --- */
+@media (max-height: 700px) {
+  .machine-container {
+    transform: scale(0.55);
+  }
+
+  .inventory-bar {
+    bottom: 5px;
   }
 }

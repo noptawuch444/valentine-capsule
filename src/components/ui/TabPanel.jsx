@@ -1,12 +1,12 @@
 export const TabPanel = ({ tabs, activeTab, onTabChange }) => {
     return (
-        <div className="flex border-b border-white/5 mb-6">
+        <div className="flex border-b border-white/5 mb-6 overflow-x-auto scrollbar-hide">
             {tabs.map((tab) => (
                 <button
                     key={tab.id}
                     className={`px-8 py-4 text-sm font-black uppercase tracking-widest transition-all relative ${activeTab === tab.id
-                            ? 'text-pink-400'
-                            : 'text-slate-500 hover:text-white'
+                        ? 'text-pink-400'
+                        : 'text-slate-500 hover:text-white'
                         }`}
                     onClick={() => onTabChange(tab.id)}
                 >
