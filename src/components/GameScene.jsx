@@ -38,9 +38,11 @@ export const GameScene = ({ isActive, onComplete, playSound, showModal, config, 
             const ball = document.createElement('div');
             ball.className = 'capsule tumble';
             ball.style.backgroundColor = item.color;
-            ball.style.left = (Math.random() * 280 + 30) + 'px';
-            ball.style.top = (Math.random() * 120 + 180) + 'px';
-            ball.style.transform = `rotate(${Math.random() * 360}deg)`;
+            const startX = (Math.random() * 260 + 30);
+            const startY = (Math.random() * 120 + 170);
+            ball.style.transform = `translate3d(${startX}px, ${startY}px, 0) rotate(${Math.random() * 360}deg)`;
+            ball.style.left = '0';
+            ball.style.top = '0';
 
             const top = document.createElement('div');
             top.className = 'capsule-top';
@@ -190,9 +192,7 @@ export const GameScene = ({ isActive, onComplete, playSound, showModal, config, 
                 const randomX = (Math.random() * 200 + 30);
                 const randomY = (Math.random() * 150 + 130);
                 const randomRot = Math.random() * 360;
-                ball.style.left = randomX + 'px';
-                ball.style.top = randomY + 'px';
-                ball.style.transform = `rotate(${randomRot}deg)`;
+                ball.style.transform = `translate3d(${randomX}px, ${randomY}px, 0) rotate(${randomRot}deg)`;
             });
         }, 150);
 
