@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Mali:wght@400;700&family=Sriracha&family=Itim&family=Charm:wght@400;700&display=swap');
 @import "./editor.css";
 
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -92,6 +97,15 @@ body {
   justify-content: center;
   transition: opacity 1s ease-in-out, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 5;
+  padding: 20px;
+}
+
+@media (max-width: 640px) {
+  .valentine-game .scene {
+    justify-content: flex-start;
+    /* Push from top to avoid bottom cut-off */
+    padding-top: 40px;
+  }
 }
 
 .scene.hidden {
@@ -421,18 +435,25 @@ body {
   margin: 0 auto;
   perspective: 1200px;
   z-index: 10;
-  filter: drop-shadow(0 30px 50px rgba(164, 19, 60, 0.2));
+  filter: drop-shadow(0 20px 40px rgba(164, 19, 60, 0.2));
   transition: transform 0.1s;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transform: translate3d(0, 0, 0);
-  /* Force GPU */
+  transform-origin: center top;
   will-change: transform;
 }
 
+
+
 .machine-shake {
   animation: machineVibrate 0.15s infinite;
+}
+
+@media (max-width: 768px) {
+  .machine-shake {
+    animation: none !important;
+  }
 }
 
 @keyframes machineVibrate {
@@ -519,8 +540,9 @@ body {
 @media (max-width: 768px) {
   .dome {
     border-width: 4px;
-    box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.3),
-      0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.3);
+    /* Simple solid BG for performance */
+    background: rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -702,6 +724,14 @@ body {
   animation: blinkStatus 1s infinite;
 }
 
+@media (max-width: 768px) {
+  .status-light.ready {
+    box-shadow: 0 0 10px #4ade80;
+    animation: none;
+    /* Disable animation on mobile to save CPU */
+  }
+}
+
 @keyframes blinkStatus {
 
   0%,
@@ -753,6 +783,12 @@ body {
   transition: all 0.5s;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .capsule {
+    box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .capsule::before {
@@ -1332,37 +1368,78 @@ body {
   }
 }
 
-/* Responsive */
+/* Responsive Optimization for Mobile */
 @media (max-width: 640px) {
   .machine-container {
-    transform: scale(0.8);
+    transform: scale(0.68);
+    margin: 0 auto;
+    filter: none !important;
+    perspective: none !important;
+    will-change: transform;
+  }
+
+  .valentine-game .scene {
+    justify-content: center !important;
+    padding: 10px !important;
+    background: #fff1f2;
+    /* Solid BG on mobile */
   }
 
   .envelope-wrapper {
-    transform: scale(0.85);
+    transform: scale(0.8);
   }
 
   .envelope-wrapper.open {
-    transform: scale(0.75) translateY(140px);
+    transform: scale(0.7) translateY(100px);
   }
 
   .envelope-wrapper.open .letter-card {
-    height: 340px;
-    transform: translateX(-50%) translateY(-90px);
-    padding: 20px 15px;
+    height: 310px;
+    transform: translateX(-50%) translateY(-70px);
+    padding: 15px 12px;
   }
 
   .final-title {
-    font-size: 2.5rem;
+    font-size: 2.0rem;
+    margin-bottom: 1.5rem;
   }
 
   .inventory-bar {
-    padding: 12px 20px;
+    padding: 10px 15px;
+    gap: 8px;
+    bottom: 20px;
+    transform: translateX(-50%) scale(0.9);
   }
 
   .inv-slot {
-    width: 45px;
-    height: 45px;
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 400px) {
+  .machine-container {
+    transform: scale(0.6);
+  }
+
+  .inventory-bar {
+    transform: translateX(-50%) scale(0.8);
+    bottom: 15px;
+  }
+
+  .final-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-height: 600px) {
+  .machine-container {
+    transform: scale(0.5);
+  }
+
+  .inventory-bar {
+    bottom: 5px;
+    padding: 5px 10px;
   }
 }
 

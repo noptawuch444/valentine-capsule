@@ -38,9 +38,11 @@ export const GameScene = ({ isActive, onComplete, playSound, showModal, config, 
             const ball = document.createElement('div');
             ball.className = 'capsule tumble';
             ball.style.backgroundColor = item.color;
-            ball.style.left = (Math.random() * 280 + 30) + 'px';
-            ball.style.top = (Math.random() * 120 + 180) + 'px';
-            ball.style.transform = `rotate(${Math.random() * 360}deg)`;
+            const startX = (Math.random() * 260 + 30);
+            const startY = (Math.random() * 120 + 170);
+            ball.style.transform = `translate3d(${startX}px, ${startY}px, 0) rotate(${Math.random() * 360}deg)`;
+            ball.style.left = '0';
+            ball.style.top = '0';
 
             const top = document.createElement('div');
             top.className = 'capsule-top';
@@ -184,17 +186,19 @@ export const GameScene = ({ isActive, onComplete, playSound, showModal, config, 
         playSound('sfxCrank');
         setTimeout(() => playSound('sfxSpin'), 200);
 
-        // Tumble capsules
+        // Tumble capsules - Performance optimized for mobile
         const rumbleInterval = setInterval(() => {
             ballsInDomeRef.current.forEach(ball => {
                 const randomX = (Math.random() * 200 + 30);
                 const randomY = (Math.random() * 150 + 130);
                 const randomRot = Math.random() * 360;
-                ball.style.left = randomX + 'px';
-                ball.style.top = randomY + 'px';
-                ball.style.transform = `rotate(${randomRot}deg)`;
+                // Use translate3d for GPU acceleration
+                ball.style.transform = `translate3d(${randomX}px, ${randomY}px, 0) rotate(${randomRot}deg)`;
+                // Remove left/top since we use translate3d
+                ball.style.left = '0';
+                ball.style.top = '0';
             });
-        }, 150);
+        }, 120);
 
         setTimeout(() => {
             clearInterval(rumbleInterval);
@@ -212,8 +216,8 @@ export const GameScene = ({ isActive, onComplete, playSound, showModal, config, 
 
     const dropBall = (ballEl, prize) => {
         if (ballEl) {
-            ballEl.style.transition = "top 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045), opacity 0.2s";
-            ballEl.style.top = "520px";
+            ballEl.style.transition = "transform 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045), opacity 0.2s";
+            ballEl.style.transform = "translate3d(160px, 520px, 0)";
             ballEl.style.opacity = "0";
         }
 
