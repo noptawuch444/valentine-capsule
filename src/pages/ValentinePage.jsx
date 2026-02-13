@@ -64,10 +64,20 @@ function ValentinePage() {
         setTimeout(() => setCurrentScene('game'), 1000);
     };
     const startOutro = () => {
+        // Immediate cleanup of main BGM to prevent overlap
+        const mainBgm = document.getElementById('mainBGM');
+        if (mainBgm) {
+            fadeOut('mainBGM', () => {
+                // Ensure it's fully stopped
+                mainBgm.pause();
+                mainBgm.currentTime = 0;
+            });
+        }
+
         setTimeout(() => {
             setCurrentScene('outro');
-            fadeOut('mainBGM');
-            fadeIn('bgmOutro', 0.5);
+            playSound('sfxTada');
+            fadeIn('bgmOutro', 0.6);
         }, 800);
     };
     const showPrizeModal = (prize) => {
