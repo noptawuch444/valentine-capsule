@@ -122,26 +122,33 @@ body {
 
 .rose-petal {
   position: absolute;
-  top: -10%;
+  top: 0;
   background-color: #ff4d6d;
   border-radius: 100% 0 100% 0;
   opacity: 0.6;
-  animation: fall linear infinite, sway ease-in-out infinite alternate;
+  animation: falling-petal linear infinite;
+  will-change: transform;
 }
 
-@keyframes fall {
-  to {
-    top: 110%;
-  }
-}
-
-@keyframes sway {
-  from {
-    transform: translateX(-20px) rotate(0deg);
+@keyframes falling-petal {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
   }
 
-  to {
-    transform: translateX(20px) rotate(45deg);
+  25% {
+    transform: translate3d(15px, 20vh, 0) rotate(90deg);
+  }
+
+  50% {
+    transform: translate3d(-15px, 50vh, 0) rotate(180deg);
+  }
+
+  75% {
+    transform: translate3d(15px, 80vh, 0) rotate(270deg);
+  }
+
+  100% {
+    transform: translate3d(0, 110vh, 0) rotate(360deg);
   }
 }
 
@@ -153,8 +160,9 @@ body {
   background: white;
   border-radius: 50%;
   animation: twinkle 4s infinite;
-  box-shadow: 0 0 15px white;
+  box-shadow: 0 0 10px white;
   z-index: 0;
+  will-change: transform, opacity;
 }
 
 @keyframes twinkle {
@@ -162,12 +170,12 @@ body {
   0%,
   100% {
     opacity: 0.2;
-    transform: scale(0.5);
+    transform: scale3d(0.5, 0.5, 1);
   }
 
   50% {
     opacity: 1;
-    transform: scale(1.5);
+    transform: scale3d(1.2, 1.2, 1);
   }
 }
 
@@ -178,11 +186,12 @@ body {
   animation: floatBackground 15s linear infinite;
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
 }
 
 @keyframes floatBackground {
   0% {
-    transform: translateY(110vh) rotate(0deg);
+    transform: translate3d(0, 110vh, 0) rotate(0deg);
     opacity: 0;
   }
 
@@ -195,7 +204,7 @@ body {
   }
 
   100% {
-    transform: translateY(-10vh) rotate(360deg);
+    transform: translate3d(20px, -10vh, 0) rotate(360deg);
     opacity: 0;
   }
 }
