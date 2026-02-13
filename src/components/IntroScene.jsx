@@ -23,22 +23,18 @@ export const IntroScene = ({ isActive, onEnterGame, playSound, config }) => {
     };
 
     const typeText = () => {
-        const audioPath = config?.audio?.soundEffects?.writing || '/short_pencil_writing.wav';
         let i = 0;
         const speed = 100;
 
+        // Use a single interval for typing
         typingIntervalRef.current = setInterval(() => {
             if (i < fullText.length) {
+                // Update text once per interval
                 setTypedText(fullText.substring(0, i + 1));
 
-                // Play typing sound
+                // Use the shared playSound function with lower volume for writing
                 if (fullText.charAt(i) !== " " && fullText.charAt(i) !== "\n") {
-                    const sound = new Audio(audioPath);
-                    sound.volume = 0.2;
-                    sound.play().catch(() => { });
-                    sound.onended = function () {
-                        this.remove();
-                    };
+                    playSound('sfxWriting', 0.2);
                 }
 
                 i++;

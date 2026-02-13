@@ -3,11 +3,11 @@ import { useRef, useCallback } from 'react';
 export const useAudio = () => {
     const audioRefs = useRef({});
 
-    const playSound = useCallback((id) => {
+    const playSound = useCallback((id, volume = 0.8) => {
         const audio = audioRefs.current[id];
         if (audio) {
             audio.currentTime = 0;
-            audio.volume = 0.8;
+            audio.volume = volume;
             audio.play().catch(e => console.log("Audio play failed", e));
         }
     }, []);
