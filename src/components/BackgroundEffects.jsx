@@ -5,6 +5,7 @@ export const BackgroundEffects = () => {
         // Detect mobile for optimization
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 
+        // On mobile, we might want to skip some effects entirely if lag persists
         createBackgroundRoses(isMobile);
         createEffects(isMobile);
     }, []);
@@ -12,18 +13,18 @@ export const BackgroundEffects = () => {
     const createBackgroundRoses = (isMobile) => {
         const container = document.getElementById('bgRoses');
         if (!container) return;
-        container.innerHTML = ''; // Clearance
+        container.innerHTML = '';
 
-        // Significantly reduce count on mobile (25 -> 8)
-        const count = isMobile ? 8 : 25;
+        // Extreme reduction for mobile (25 -> 5)
+        const count = isMobile ? 5 : 25;
 
         for (let i = 0; i < count; i++) {
             const rose = document.createElement('div');
             rose.className = 'rose-petal';
             rose.style.left = Math.random() * 100 + 'vw';
-            rose.style.width = Math.random() * 12 + 8 + 'px';
-            rose.style.height = Math.random() * 12 + 8 + 'px';
-            rose.style.animationDuration = (Math.random() * 5 + (isMobile ? 8 : 5)) + 's';
+            rose.style.width = (isMobile ? 10 : 15) + 'px';
+            rose.style.height = (isMobile ? 10 : 15) + 'px';
+            rose.style.animationDuration = (Math.random() * 5 + (isMobile ? 12 : 7)) + 's';
             rose.style.backgroundColor = `hsl(${Math.random() * 20 + 340}, 80%, 65%)`;
             container.appendChild(rose);
         }
@@ -33,31 +34,32 @@ export const BackgroundEffects = () => {
         const sparkles = document.getElementById('sparkles');
         const hearts = document.getElementById('floatingHeartsContainer');
 
+        // Sparkles are heavy because of box-shadow. Disable on mobile.
         if (sparkles) {
             sparkles.innerHTML = '';
-            // 30 -> 10 on mobile
-            const sCount = isMobile ? 10 : 30;
-            for (let i = 0; i < sCount; i++) {
-                const s = document.createElement('div');
-                s.className = 'sparkle-bg';
-                s.style.left = Math.random() * 100 + 'vw';
-                s.style.top = Math.random() * 100 + 'vh';
-                s.style.animationDelay = Math.random() * 3 + 's';
-                sparkles.appendChild(s);
+            if (!isMobile) {
+                for (let i = 0; i < 30; i++) {
+                    const s = document.createElement('div');
+                    s.className = 'sparkle-bg';
+                    s.style.left = Math.random() * 100 + 'vw';
+                    s.style.top = Math.random() * 100 + 'vh';
+                    s.style.animationDelay = Math.random() * 3 + 's';
+                    sparkles.appendChild(s);
+                }
             }
         }
 
         if (hearts) {
             hearts.innerHTML = '';
-            // 15 -> 6 on mobile
-            const hCount = isMobile ? 6 : 15;
+            // 15 -> 4 on mobile
+            const hCount = isMobile ? 4 : 15;
             for (let i = 0; i < hCount; i++) {
                 const h = document.createElement('div');
                 h.className = 'floating-heart-bg';
                 h.innerHTML = '❤';
                 h.style.left = Math.random() * 100 + 'vw';
-                h.style.fontSize = (Math.random() * (isMobile ? 15 : 30) + 10) + 'px';
-                h.style.animationDuration = (Math.random() * 10 + 12) + 's';
+                h.style.fontSize = (isMobile ? 16 : (Math.random() * 20 + 15)) + 'px';
+                h.style.animationDuration = (Math.random() * 10 + (isMobile ? 15 : 10)) + 's';
                 h.style.animationDelay = Math.random() * 5 + 's';
                 hearts.appendChild(h);
             }

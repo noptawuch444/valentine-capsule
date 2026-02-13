@@ -420,15 +420,18 @@ body {
   margin: 0 auto;
   perspective: 1200px;
   z-index: 10;
-  filter: drop-shadow(0 40px 60px rgba(164, 19, 60, 0.3));
+  filter: drop-shadow(0 30px 50px rgba(164, 19, 60, 0.2));
   transition: transform 0.1s;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transform: translate3d(0, 0, 0);
+  /* Force GPU */
+  will-change: transform;
 }
 
 .machine-shake {
-  animation: machineVibrate 0.1s infinite;
+  animation: machineVibrate 0.15s infinite;
 }
 
 @keyframes machineVibrate {
@@ -497,18 +500,27 @@ body {
   width: 380px;
   height: 360px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0.3) 0%,
       rgba(255, 255, 255, 0.05) 50%,
-      rgba(255, 240, 245, 0.15) 100%);
+      rgba(255, 255, 255, 0.15) 100%);
   border-radius: 190px 190px 20px 20px;
-  backdrop-filter: blur(3px);
+  /* Removed backdrop-filter for performance */
   z-index: 10;
   overflow: hidden;
-  box-shadow: inset 0 15px 40px rgba(255, 255, 255, 0.8), inset 0 -15px 25px rgba(0, 0, 0, 0.08),
-    0 20px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.3);
-  border: 8px solid rgba(255, 175, 204, 0.6);
+  box-shadow: inset 0 8px 25px rgba(255, 255, 255, 0.3),
+    0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 6px solid #ffafcc;
   border-bottom: none;
+  background-clip: padding-box;
   margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .dome {
+    border-width: 4px;
+    box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.3),
+      0 10px 20px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .dome::before {
