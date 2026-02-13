@@ -6,7 +6,7 @@ import { TextEditor } from '../components/editor/TextEditor';
 import { ThemeEditor } from '../components/editor/ThemeEditor';
 import { AudioEditor } from '../components/editor/AudioEditor';
 import { TabPanel } from '../components/ui/TabPanel';
-import { Save, ExternalLink, ArrowLeft, LayoutDashboard, Settings } from 'lucide-react';
+import { Save, ExternalLink, ArrowLeft, LayoutDashboard, Settings, LogOut } from 'lucide-react';
 
 export default function AdminPage() {
     const { templates, updateTemplate, loading } = useTemplate();
@@ -144,20 +144,36 @@ export default function AdminPage() {
         );
     }
 
+    const handleLogout = () => {
+        sessionStorage.removeItem('adminAuth');
+        window.location.href = '/';
+    };
+
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
-            <nav className="h-20 border-b border-white/5 px-8 flex items-center justify-between">
+        <div className="min-h-screen bg-[#0f172a] text-white font-mali">
+            <nav className="h-20 border-b border-white/5 px-8 flex items-center justify-between sticky top-0 bg-[#0f172a]/80 backdrop-blur-md z-50">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-pink-500/20">
                         <LayoutDashboard size={20} fill="white" />
                     </div>
                     <h1 className="text-xl font-black uppercase tracking-tighter">Admin Portal</h1>
                 </div>
-                <div className="flex items-center gap-4 text-slate-500 text-xs font-bold uppercase tracking-widest">
-                    <span className="bg-white/5 px-3 py-1.5 rounded-full border border-white/5">v1.2 Stable</span>
+                <div className="flex items-center gap-6">
+                    <div className="hidden md:flex items-center gap-4 text-slate-500 text-[10px] font-black uppercase tracking-widest">
+                        <span className="bg-white/5 px-3 py-1.5 rounded-full border border-white/5">v1.2 Stable</span>
+                    </div>
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-xl text-xs font-black transition-all duration-300 border border-red-500/20"
+                    >
+                        <LogOut size={16} />
+                        <span>Log Out</span>
+                    </button>
                 </div>
             </nav>
-            <TemplateList onEdit={handleEdit} />
+            <main className="p-8">
+                <TemplateList onEdit={handleEdit} />
+            </main>
         </div>
     );
 }
