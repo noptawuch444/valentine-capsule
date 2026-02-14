@@ -11,7 +11,8 @@ const DEFAULT_TRACKS = [
     { name: 'Outro Theme 3', url: '/outrol3.mp3', mood: 'Happy' },
     { name: 'Outro Theme 4', url: '/outrol4.mp3', mood: 'Emotional' },
     { name: 'Outro Theme 5', url: '/outrol5.mp3', mood: 'Sad/Deep' },
-    { name: 'Outro Theme 6', url: '/outrol6.mp3', mood: 'Pop' }
+    { name: 'Outro Theme 6', url: '/outrol6.mp3', mood: 'Pop' },
+    { name: 'Outro Theme 7', url: '/outrol7.mp3', mood: 'Lo-Fi/Chill' }
 ];
 
 export const AudioEditor = ({ audio, onChange }) => {
