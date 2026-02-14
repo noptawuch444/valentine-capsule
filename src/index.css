@@ -419,10 +419,11 @@ body {
 
 /* --- GAME: Luxury Gacha Machine --- */
 .machine-container {
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: 440px;
   height: 700px;
-  margin: 0 auto;
   perspective: 1200px;
   z-index: 10;
   filter: drop-shadow(0 30px 50px rgba(164, 19, 60, 0.23));
@@ -432,6 +433,7 @@ body {
   align-items: center;
   transform-origin: center center;
   will-change: transform;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 
@@ -1912,14 +1914,14 @@ body {
   }
 
   .machine-container {
-    transform: scale(0.9);
+    transform: translate(-50%, -50%) scale(0.9);
   }
 }
 
 /* --- MOBILE & TABLET (SM-MD) --- */
 @media (max-width: 768px) {
   .machine-container {
-    transform: scale(0.85);
+    transform: translate(-50%, -50%) scale(0.85);
   }
 
   .envelope-wrapper {
@@ -1988,7 +1990,7 @@ body {
 /* --- SMALL MOBILE (SM) --- */
 @media (max-width: 480px) {
   .machine-container {
-    transform: scale(0.82);
+    transform: translate(-50%, -50%) scale(0.82);
   }
 
   .envelope-wrapper {
@@ -2041,7 +2043,7 @@ body {
 /* --- SUPER SMALL MOBILE (XS) --- */
 @media (max-width: 380px) {
   .machine-container {
-    transform: scale(0.68);
+    transform: translate(-50%, -50%) scale(0.68);
   }
 
   .final-title {
@@ -2052,7 +2054,7 @@ body {
 /* --- SHORT SCREENS (Landscape/Small height) --- */
 @media (max-height: 700px) {
   .machine-container {
-    transform: scale(0.55);
+    transform: translate(-50%, -50%) scale(0.55);
   }
 
   .inventory-bar {
