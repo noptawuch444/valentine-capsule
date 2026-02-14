@@ -418,6 +418,10 @@ body {
 }
 
 /* --- GAME: Luxury Gacha Machine --- */
+:root {
+  --machine-scale: 1;
+}
+
 .machine-container {
   position: absolute;
   left: 50%;
@@ -433,7 +437,7 @@ body {
   align-items: center;
   transform-origin: center center;
   will-change: transform;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(var(--machine-scale));
 }
 
 
@@ -442,28 +446,18 @@ body {
 }
 
 @keyframes machineVibrate {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
 
-  20% {
-    transform: translate(-3px, 2px) rotate(-1deg);
-  }
-
-  40% {
-    transform: translate(-2px, -3px) rotate(1deg);
-  }
-
-  60% {
-    transform: translate(3px, 1px) rotate(0deg);
-  }
-
-  80% {
-    transform: translate(1px, -2px) rotate(1deg);
-  }
-
+  0%,
   100% {
-    transform: translate(0, 0) rotate(0deg);
+    transform: translate(-50%, -50%) scale(calc(var(--machine-scale) * 1.05)) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(-50%, -50%) scale(calc(var(--machine-scale) * 1.05)) rotate(-1deg);
+  }
+
+  75% {
+    transform: translate(-50%, -50%) scale(calc(var(--machine-scale) * 1.05)) rotate(1deg);
   }
 }
 
@@ -1914,14 +1908,14 @@ body {
   }
 
   .machine-container {
-    transform: translate(-50%, -50%) scale(0.9);
+    --machine-scale: 0.9;
   }
 }
 
 /* --- MOBILE & TABLET (SM-MD) --- */
 @media (max-width: 768px) {
   .machine-container {
-    transform: translate(-50%, -50%) scale(0.85);
+    --machine-scale: 0.85;
   }
 
   .envelope-wrapper {
@@ -1990,7 +1984,7 @@ body {
 /* --- SMALL MOBILE (SM) --- */
 @media (max-width: 480px) {
   .machine-container {
-    transform: translate(-50%, -50%) scale(0.82);
+    --machine-scale: 0.82;
   }
 
   .envelope-wrapper {
@@ -2043,7 +2037,7 @@ body {
 /* --- SUPER SMALL MOBILE (XS) --- */
 @media (max-width: 380px) {
   .machine-container {
-    transform: translate(-50%, -50%) scale(0.68);
+    --machine-scale: 0.68;
   }
 
   .final-title {
@@ -2054,7 +2048,7 @@ body {
 /* --- SHORT SCREENS (Landscape/Small height) --- */
 @media (max-height: 700px) {
   .machine-container {
-    transform: translate(-50%, -50%) scale(0.55);
+    --machine-scale: 0.55;
   }
 
   .inventory-bar {
