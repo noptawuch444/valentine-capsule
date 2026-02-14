@@ -1988,7 +1988,7 @@ body {
 /* --- SMALL MOBILE (SM) --- */
 @media (max-width: 480px) {
   .machine-container {
-    transform: scale(0.7) translateY(-35px);
+    transform: scale(0.82);
   }
 
   .envelope-wrapper {
@@ -2027,8 +2027,10 @@ body {
   .love-coin {
     width: 80px;
     height: 80px;
-    bottom: 100px;
-    right: 20px;
+    bottom: 105px;
+    right: 15px;
+    z-index: 100;
+    /* Ensure it stays above other elements but below modals */
   }
 
   .valentine-game .scene {
@@ -2039,7 +2041,7 @@ body {
 /* --- SUPER SMALL MOBILE (XS) --- */
 @media (max-width: 380px) {
   .machine-container {
-    transform: scale(0.6);
+    transform: scale(0.68);
   }
 
   .final-title {
